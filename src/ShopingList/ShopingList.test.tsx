@@ -9,7 +9,7 @@ test("should render information about empty array", () => {
   expect(screen.getByText(/empty list/i)).toBeInTheDocument()
 })
 
-test("render list should have length equal to length given product array", async () => {
+test("should render a list of products", async () => {
   const products: TListItem[] = [
     { id: 1, name: "tomato", isBought: false },
     { id: 2, name: "kiwi", isBought: false },
@@ -22,5 +22,15 @@ test("render list should have length equal to length given product array", async
 
   await screen.findAllByRole("list")
 
-  expect(screen.getAllByRole("listitem")).toHaveLength(products.length)
+  const listitems = screen.getAllByRole("listitem")
+
+  expect(listitems).toHaveLength(products.length)
+
+  expect(listitems.map((item) => item.textContent)).toEqual([
+    "tomato",
+    "kiwi",
+    "apple",
+    "banana",
+    "pomelo",
+  ])
 })
