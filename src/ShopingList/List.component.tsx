@@ -6,7 +6,7 @@ type TProps = {
 }
 const List = ({ products }: TProps) => {
   if (!products.length) {
-    return <div>Empty list</div>
+    return <div className="empty">Empty list</div>
   }
   return (
     <ul>
