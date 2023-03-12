@@ -82,7 +82,7 @@ test("should spread products for 2 lists", () => {
   expect(getAllBListByRole("listitem")).toHaveLength(haveProducts)
 })
 
-test("click on list element remove it from list", async () => {
+test("click on A list element remove it from list A and add to list B", async () => {
   const products: TListItem[] = [
       { id: 1, name: "tomato", isBought: false },
       { id: 2, name: "kiwi", isBought: true },
@@ -90,21 +90,35 @@ test("click on list element remove it from list", async () => {
       { id: 4, name: "banana", isBought: true },
       { id: 5, name: "pomelo", isBought: false },
     ],
-    beforeClickProductsCount = 3,
-    afterClickProductsCount = 2
+    beforeClickNeedProductsCount = 3,
+    beforeClickHaveProductsCount = 2
 
   render(<ShopingList products={products} />)
 
   const lists = screen.getAllByRole("list"),
-    { getAllByRole: getAllAListByRole } = within(lists[0])
+    { getAllByRole: getAllAListByRole } = within(lists[0]),
+    { getAllByRole: getAllBListByRole } = within(lists[1])
 
-  expect(getAllAListByRole("listitem")).toHaveLength(beforeClickProductsCount)
+  expect(getAllAListByRole("listitem")).toHaveLength(
+    beforeClickNeedProductsCount
+  )
 
   await userEvent.click(screen.getByText(products[0].name))
 
-  const allItemsAfterEvent = getAllAListByRole("listitem")
-  expect(allItemsAfterEvent).toHaveLength(afterClickProductsCount)
-  expect(getAllAListByRole("listitem").map((item) => item.textContent)).toEqual(
-    ["apple", "pomelo"]
-  )
+  // check if A list items is less by one
+  const allAListItemsAfterEvent = getAllAListByRole("listitem")
+  expect(allAListItemsAfterEvent).toHaveLength(beforeClickNeedProductsCount - 1)
+  expect(allAListItemsAfterEvent.map((item) => item.textContent)).toEqual([
+    "apple",
+    "pomelo",
+  ])
+
+  // check if B list items is more by one
+  const allBListItemsAfterEvent = getAllBListByRole("listitem")
+  expect(allBListItemsAfterEvent).toHaveLength(beforeClickHaveProductsCount + 1)
+  expect(allBListItemsAfterEvent.map((item) => item.textContent)).toEqual([
+    "tomato",
+    "kiwi",
+    "banana",
+  ])
 })
