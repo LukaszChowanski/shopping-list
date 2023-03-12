@@ -1,8 +1,9 @@
 import { render, screen } from "@testing-library/react"
 import { List } from "./List.component"
+import { TListItem } from "./ShopingList.type"
 
-test("should render list of given elements", async () => {
-  const products = [
+test("render list should have length equal to length given product array", async () => {
+  const products: TListItem[] = [
     { id: 1, name: "tomato", isBought: false },
     { id: 2, name: "kiwi", isBought: false },
     { id: 3, name: "apple", isBought: false },
