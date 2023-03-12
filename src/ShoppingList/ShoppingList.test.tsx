@@ -9,14 +9,17 @@ import userEvent from "@testing-library/user-event"
 import { List } from "./List.component"
 import { ShoppingList } from "./ShoppingList.component"
 import { TListItem } from "./ShoppingList.type"
+import {
+  ShoppingListProvider,
+  ShoppingContext,
+} from "./ShoppingContext.context"
 
 afterEach(cleanup)
-const handleClick = jest.fn((id: number) => {})
 
 test("should render information about empty array", () => {
   const products: TListItem[] = []
 
-  render(<List products={products} handleClick={handleClick} />)
+  render(<List products={products} />)
   expect(screen.getByText(/empty list/i)).toBeInTheDocument()
 })
 
@@ -29,8 +32,7 @@ test("should render a list of products", async () => {
       { id: 5, name: "pomelo", isBought: false },
     ],
     expectedArray = ["tomato", "kiwi", "apple", "banana", "pomelo"]
-
-  render(<List products={products} handleClick={handleClick} />)
+  render(<List products={products} />)
 
   await screen.findAllByRole("list")
 
@@ -52,7 +54,14 @@ test("click on list element should call function once", async () => {
 
   const testingProductIndex = 0
 
-  render(<List products={products} handleClick={handleClick} />)
+  const handleClick = jest.fn((id: number) => {})
+  render(
+    <ShoppingContext.Provider
+      value={{ handleClick: handleClick, needProducts: [], haveProducts: [] }}
+    >
+      <List products={products} />
+    </ShoppingContext.Provider>
+  )
 
   await fireEvent.click(screen.getByText(products[testingProductIndex].name))
 
@@ -71,7 +80,11 @@ test("should spread products for 2 lists", () => {
     haveProducts = 2,
     needProducts = 3
 
-  render(<ShoppingList products={products} />)
+  render(
+    <ShoppingListProvider products={products}>
+      <ShoppingList />
+    </ShoppingListProvider>
+  )
 
   const lists = screen.getAllByRole("list"),
     { getAllByRole: getAllAListByRole } = within(lists[0]),
@@ -93,7 +106,11 @@ test("click on A list element remove it from list A and add to list B", async ()
     beforeClickNeedProductsCount = 3,
     beforeClickHaveProductsCount = 2
 
-  render(<ShoppingList products={products} />)
+  render(
+    <ShoppingListProvider products={products}>
+      <ShoppingList />
+    </ShoppingListProvider>
+  )
 
   const lists = screen.getAllByRole("list"),
     { getAllByRole: getAllAListByRole } = within(lists[0]),
@@ -134,7 +151,11 @@ test("click on B list element remove it from list B and add to list A", async ()
     beforeClickNeedProductsCount = 3,
     beforeClickHaveProductsCount = 2
 
-  render(<ShoppingList products={products} />)
+  render(
+    <ShoppingListProvider products={products}>
+      <ShoppingList />
+    </ShoppingListProvider>
+  )
 
   const lists = screen.getAllByRole("list"),
     { getAllByRole: getAllAListByRole } = within(lists[0]),

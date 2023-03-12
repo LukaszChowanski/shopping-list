@@ -3,18 +3,15 @@ import { TListItem } from "./ShoppingList.type"
 
 type TProps = {
   products: TListItem[]
-  handleClick: (id: number) => void
 }
-const List = ({ products, handleClick }: TProps) => {
+const List = ({ products }: TProps) => {
   if (!products.length) {
     return <div className="empty">Empty list</div>
   }
   return (
     <ul>
       {products.map((product) => {
-        return (
-          <ListItem key={product.id} {...product} handleClick={handleClick} />
-        )
+        return <ListItem key={product.id} {...product} />
       })}
     </ul>
   )
