@@ -1,6 +1,6 @@
 import React from "react"
 import "./App.css"
-import { ShopingList } from "./ShopingList/ShopingList.component"
+import { ShoppingList } from "./ShoppingList/ShoppingList.component"
 
 function App() {
   const products = [
@@ -15,7 +15,7 @@ function App() {
       <header className="App-header">
         <h1>Shoping list</h1>
       </header>
-      <ShopingList products={products} />
+      <ShoppingList products={products} />
     </div>
   )
 }

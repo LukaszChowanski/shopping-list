@@ -1,5 +1,5 @@
 import { ListItem } from "./ListItem.component"
-import { TListItem } from "./ShopingList.type"
+import { TListItem } from "./ShoppingList.type"
 
 type TProps = {
   products: TListItem[]

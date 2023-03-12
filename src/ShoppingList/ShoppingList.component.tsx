@@ -1,12 +1,12 @@
 import { useState } from "react"
 import { List } from "./List.component"
-import { TListItem } from "./ShopingList.type"
+import { TListItem } from "./ShoppingList.type"
 
 type TProps = {
   products: TListItem[]
 }
 
-const ShopingList = ({ products }: TProps) => {
+const ShoppingList = ({ products }: TProps) => {
   const [shoppingList, setShoppingList] = useState(products)
   const needProducts = shoppingList.filter((item) => item.isBought === false)
   const haveProducts = shoppingList.filter((item) => item.isBought === true)
@@ -31,11 +31,11 @@ const ShopingList = ({ products }: TProps) => {
       </div>
 
       <div className="flex-column">
-        <h2>Fruit i haveeee</h2>
+        <h2>Fruit i have</h2>
         <List products={haveProducts} handleClick={handleClick} />
       </div>
     </section>
   )
 }
 
-export { ShopingList }
+export { ShoppingList }

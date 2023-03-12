@@ -7,8 +7,8 @@ import {
 } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { List } from "./List.component"
-import { ShopingList } from "./ShopingList.component"
-import { TListItem } from "./ShopingList.type"
+import { ShoppingList } from "./ShoppingList.component"
+import { TListItem } from "./ShoppingList.type"
 
 afterEach(cleanup)
 const handleClick = jest.fn((id: number) => {})
@@ -71,7 +71,7 @@ test("should spread products for 2 lists", () => {
     haveProducts = 2,
     needProducts = 3
 
-  render(<ShopingList products={products} />)
+  render(<ShoppingList products={products} />)
 
   const lists = screen.getAllByRole("list"),
     { getAllByRole: getAllAListByRole } = within(lists[0]),
@@ -93,7 +93,7 @@ test("click on A list element remove it from list A and add to list B", async ()
     beforeClickNeedProductsCount = 3,
     beforeClickHaveProductsCount = 2
 
-  render(<ShopingList products={products} />)
+  render(<ShoppingList products={products} />)
 
   const lists = screen.getAllByRole("list"),
     { getAllByRole: getAllAListByRole } = within(lists[0]),
@@ -134,7 +134,7 @@ test("click on B list element remove it from list B and add to list A", async ()
     beforeClickNeedProductsCount = 3,
     beforeClickHaveProductsCount = 2
 
-  render(<ShopingList products={products} />)
+  render(<ShoppingList products={products} />)
 
   const lists = screen.getAllByRole("list"),
     { getAllByRole: getAllAListByRole } = within(lists[0]),

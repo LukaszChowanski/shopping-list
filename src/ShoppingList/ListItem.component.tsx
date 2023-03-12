@@ -1,4 +1,4 @@
-import { TListItem } from "./ShopingList.type"
+import { TListItem } from "./ShoppingList.type"
 
 type TProps = TListItem & {
   handleClick: (id: number) => void
