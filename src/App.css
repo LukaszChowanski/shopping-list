@@ -7,13 +7,10 @@ ul {
   align-items: flex-start;
 }
 
-.empty {
-  flex-grow: 2;
-}
-
 ul, .empty {
   background-color:  #c7c7c7;
   padding: 2rem 4rem;
+  flex-grow: 2;
 }
 
 h2 {
@@ -31,7 +28,7 @@ li {
   border: 1px solid #000;
   min-width: max-content;
   font-weight: 700;
-
+  text-transform: uppercase;
 }
 
 .App {
@@ -51,7 +48,6 @@ li {
 
 .App-header {
   background-color: #fff;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
