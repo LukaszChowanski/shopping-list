@@ -1,4 +1,5 @@
 import { render, screen, within } from "@testing-library/react"
+import userEvent from "@testing-library/user-event"
 import { List } from "./List.component"
 import { ShopingList } from "./ShopingList.component"
 import { TListItem } from "./ShopingList.type"
@@ -56,4 +57,31 @@ test("should spread products for 2 lists", () => {
   expect(lists).toHaveLength(2)
   expect(getAllAListByRole("listitem")).toHaveLength(needProducts)
   expect(getAllBListByRole("listitem")).toHaveLength(haveProducts)
+})
+
+test("click on list element remove it from list", async () => {
+  const products: TListItem[] = [
+      { id: 1, name: "tomato", isBought: false },
+      { id: 2, name: "kiwi", isBought: true },
+      { id: 3, name: "apple", isBought: false },
+      { id: 4, name: "banana", isBought: true },
+      { id: 5, name: "pomelo", isBought: false },
+    ],
+    beforeClickProductsCount = 3,
+    afterClickProductsCount = 2
+
+  render(<ShopingList products={products} />)
+
+  const lists = screen.getAllByRole("list"),
+    { getAllByRole: getAllAListByRole } = within(lists[0])
+
+  expect(getAllAListByRole("listitem")).toHaveLength(beforeClickProductsCount)
+
+  await userEvent.click(screen.getByText(products[0].name))
+
+  const allItemsAfterEvent = getAllAListByRole("listitem")
+  expect(allItemsAfterEvent).toHaveLength(afterClickProductsCount)
+  expect(getAllAListByRole("listitem").map((item) => item.textContent)).toEqual(
+    ["apple", "pomelo"]
+  )
 })
