@@ -22,12 +22,13 @@ test("should render information about empty array", () => {
 
 test("should render a list of products", async () => {
   const products: TListItem[] = [
-    { id: 1, name: "tomato", isBought: false },
-    { id: 2, name: "kiwi", isBought: false },
-    { id: 3, name: "apple", isBought: false },
-    { id: 4, name: "banana", isBought: false },
-    { id: 5, name: "pomelo", isBought: false },
-  ]
+      { id: 1, name: "tomato", isBought: false },
+      { id: 2, name: "kiwi", isBought: false },
+      { id: 3, name: "apple", isBought: false },
+      { id: 4, name: "banana", isBought: false },
+      { id: 5, name: "pomelo", isBought: false },
+    ],
+    expectedArray = ["tomato", "kiwi", "apple", "banana", "pomelo"]
 
   render(<List products={products} handleClick={handleClick} />)
 
@@ -37,13 +38,26 @@ test("should render a list of products", async () => {
 
   expect(listitems).toHaveLength(products.length)
 
-  expect(listitems.map((item) => item.textContent)).toEqual([
-    "tomato",
-    "kiwi",
-    "apple",
-    "banana",
-    "pomelo",
-  ])
+  expect(listitems.map((item) => item.textContent)).toEqual(expectedArray)
+})
+
+test("click on list element should call function once", async () => {
+  const products: TListItem[] = [
+    { id: 1, name: "tomato", isBought: false },
+    { id: 2, name: "kiwi", isBought: false },
+    { id: 3, name: "apple", isBought: false },
+    { id: 4, name: "banana", isBought: false },
+    { id: 5, name: "pomelo", isBought: false },
+  ]
+
+  const testingProductIndex = 0
+
+  render(<List products={products} handleClick={handleClick} />)
+
+  await fireEvent.click(screen.getByText(products[testingProductIndex].name))
+
+  expect(handleClick).toHaveBeenCalledTimes(1)
+  expect(handleClick).toHaveBeenCalledWith(products[testingProductIndex].id)
 })
 
 test("should spread products for 2 lists", () => {
