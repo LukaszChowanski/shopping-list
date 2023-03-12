@@ -1,13 +1,22 @@
-import { render, screen, within } from "@testing-library/react"
+import {
+  cleanup,
+  fireEvent,
+  render,
+  screen,
+  within,
+} from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { List } from "./List.component"
 import { ShopingList } from "./ShopingList.component"
 import { TListItem } from "./ShopingList.type"
 
+afterEach(cleanup)
+const handleClick = jest.fn((id: number) => {})
+
 test("should render information about empty array", () => {
   const products: TListItem[] = []
 
-  render(<List products={products} />)
+  render(<List products={products} handleClick={handleClick} />)
   expect(screen.getByText(/empty list/i)).toBeInTheDocument()
 })
 
@@ -20,7 +29,7 @@ test("should render a list of products", async () => {
     { id: 5, name: "pomelo", isBought: false },
   ]
 
-  render(<List products={products} />)
+  render(<List products={products} handleClick={handleClick} />)
 
   await screen.findAllByRole("list")
 

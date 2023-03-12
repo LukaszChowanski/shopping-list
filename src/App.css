@@ -23,7 +23,8 @@ h2, li, div {
   text-align: start;
 }
 
-li {
+button {
+  background-color: transparent;
   padding: .5rem 2rem;
   border: 1px solid #000;
   min-width: max-content;

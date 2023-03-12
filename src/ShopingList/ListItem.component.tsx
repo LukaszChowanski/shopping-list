@@ -1,7 +1,15 @@
 import { TListItem } from "./ShopingList.type"
 
-const ListItem = ({ name }: TListItem) => {
-  return <li>{name}</li>
+type TProps = TListItem & {
+  handleClick: (id: number) => void
+}
+
+const ListItem = ({ id, name, handleClick }: TProps) => {
+  return (
+    <li>
+      <button onClick={() => handleClick(id)}>{name}</button>
+    </li>
+  )
 }
 
 export { ListItem }
