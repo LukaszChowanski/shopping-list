@@ -5,6 +5,9 @@ type TProps = {
   products: TListItem[]
 }
 const List = ({ products }: TProps) => {
+  if (!products.length) {
+    return <div>Empty list</div>
+  }
   return (
     <ul>
       {products.map((product) => {
