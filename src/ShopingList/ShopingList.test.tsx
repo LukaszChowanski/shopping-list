@@ -2,6 +2,13 @@ import { render, screen } from "@testing-library/react"
 import { List } from "./List.component"
 import { TListItem } from "./ShopingList.type"
 
+test("should render information about empty array", () => {
+  const products: TListItem[] = []
+
+  render(<List products={products} />)
+  expect(screen.getByText(/empty list/i)).toBeInTheDocument()
+})
+
 test("render list should have length equal to length given product array", async () => {
   const products: TListItem[] = [
     { id: 1, name: "tomato", isBought: false },
